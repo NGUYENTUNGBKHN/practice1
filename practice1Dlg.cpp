@@ -118,7 +118,6 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	
 	
 	ComFile f;
-	char *test;
 	f.open(input_binary);
 	f.read();
 	//TRACE(f.data.c_str());
@@ -223,11 +222,37 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 void Cpractice1Dlg::OnSelchangeCombo1()
 {
 	// TODO: Add your control notification handler code here
-	static int init = 0;
-	
-	this->UpdateData();
-	
-	
+	CString tg;
+	CString edit1_data;
+
+	if (m_cb1 == "HEX")
+	{
+		for (int i = 0; i < __data.length(); i++)
+		{
+			tg.Format(_T("%x"), __data[i]);
+			edit1_data += tg;
+			edit1_data += " ";
+		}
+		edit_box_show_data(edit1_data);
+		edit1_data = "";
+		//MessageBox(NULL,L"HEX",0);
+	}
+	else if (m_cb1 == "DEC")
+	{
+		MessageBox(NULL, L"DEC", 0);
+	}
+	else if (m_cb1 == "OCT")
+	{
+		MessageBox(NULL, L"OCT", 0);
+	}
+	else if (m_cb1 == "ASCII")
+	{
+		MessageBox(NULL, L"ASCII", 0);
+	}
+	else  // bin
+	{
+		MessageBox(NULL, L"BIN", 0);
+	}
 	this->UpdateData(FALSE);
 }
 
