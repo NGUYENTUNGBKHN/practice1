@@ -34,31 +34,33 @@ void ComFile::close()
 
 int ComFile::read()
 {
+	std::string temp;
 	if (!fs.is_open())
 	{
 		return 1;
 	}
-	while (getline(fs, data))
+	while (getline(fs, temp))
 	{
-		
+		data_text += temp;
 	}
 
-	for (int i = 0; i < data.length();i++)
+	for (int i = 0; i < data_text.length();i++)
 	{
-		if (data[i] == 0x00)
+		if (data_text[i] == 0x00)
 		{
 			data_show += " ";
 		}
 		else
 		{
-			data_show += data[i];
+			data_show += data_text[i];
 		}
+		//TRACE("%x\n", data_text[i]);
 	}
 	//TRACE(data_show);
 	return 0;
 }
 
-int ComFile::write()
+int ComFile::write(std::string data)
 {
 	
 	if (!fs.is_open())
@@ -88,7 +90,7 @@ int ComFile::check_header_file()
 	std::string header_file;
 	for (int i = 0; i < 12;i++)
 	{
-		header_file += data[i];
+		header_file += data_text[i];
 	}
 
 	//cout << header_file << endl;
@@ -101,7 +103,7 @@ int ComFile::check_header_file()
 
 int ComFile::check_size_file()
 {
-	if (data.length() != 254)
+	if (data_text.length() != 254)
 	{
 		return 1;
 	}
@@ -111,6 +113,6 @@ int ComFile::check_size_file()
 void ComFile::reset()
 {
 	dir_in_file = "";
-	data = "";
+	data_text = "";
 	data_show = "";
 }

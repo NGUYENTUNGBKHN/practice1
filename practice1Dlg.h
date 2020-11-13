@@ -36,4 +36,8 @@ public:
 	afx_msg void OnBnClickedButtonShow();
 	CString str_show;
 	afx_msg void OnBnClickedButtonSave();
+	CComboBox c_cb1;
+	CString m_cb1;
+	afx_msg void OnSelchangeCombo1();
+	void edit_box_show_data(CString data);
 };
