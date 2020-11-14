@@ -1,11 +1,30 @@
 #include "pch.h"
 #include "communicate_file.h"
 
+item_t item[] = { {"File name,","ASCII",16},
+						{"Format Rev.,","ASCII",2},
+						{"Total size,","ASCII",4},
+						{"USB PID,","ASCII",2},
+						{"Reserved,","ASCII",40},
+						{"Category,","ASCII",16},
+						{"Category ID,","ASCII",2},
+						{"Format Rev.,","ASCII",2},
+						{"Toltal size,","ASCII",4},
+						{"Reserved,","ASCII",8},
+						{"Model,","ASCII",32},
+						{"Serial number 1,","ASCII",12},
+						{"Serial number 2,","ASCII",12},
+						{"SoftWare version,","ASCII",64},
+						{"Boot version,","ASCII",16},
+						{"Set timer,","ASCII",8},
+						{"Eapsed time,","ASCII",2},
+						{"a,","ASCII",2},
+						{"b,","ASCII",4} };
 
 // contructor :
 ComFile::ComFile()
 {
-
+	data_text1 = new char[254];
 }
 
 // destructor :
@@ -19,11 +38,11 @@ int ComFile::open(CString dir_file)
 	fs.open(dir_file);
 	if (!fs.is_open())
 	{
-		return 1;
+		return COM_FAIL;
 	}
 	dir_in_file = dir_file;
 	//TRACE(dir_file);
-	return 0;
+	return COM_OK;
 }
 
 void ComFile::close()
@@ -32,32 +51,31 @@ void ComFile::close()
 }
 
 
+int ComFile::read1()
+{
+	if (!fs.is_open())
+	{
+		return COM_FAIL;
+	}
+	fs.read(data_text1, LEN_FILE);
+	//TRACE(data_text1);
+	return COM_OK;
+}
+
 int ComFile::read()
 {
 	std::string temp;
 	if (!fs.is_open())
 	{
-		return 1;
+		return COM_FAIL;
 	}
 	while (getline(fs, temp))
 	{
 		data_text += temp;
 	}
 
-	for (int i = 0; i < data_text.length();i++)
-	{
-		if (data_text[i] == 0x00)
-		{
-			data_show += " ";
-		}
-		else
-		{
-			data_show += data_text[i];
-		}
-		//TRACE("%x\n", data_text[i]);
-	}
 	//TRACE(data_show);
-	return 0;
+	return COM_OK;
 }
 
 int ComFile::write(std::string data)
@@ -65,11 +83,51 @@ int ComFile::write(std::string data)
 	
 	if (!fs.is_open())
 	{
-		return 1;
+		return COM_FAIL;
 	}
 	
 	fs << data;
-	return 0;
+	return COM_OK;
+}
+
+int ComFile::write_csv(std::string data)
+{
+	// sure file open
+	if (!fs.is_open())
+	{
+		return COM_FAIL;
+	}
+	
+	std::string item_name;
+	std::string item_data;
+	std::string a;
+
+	int size_last = 0;
+
+	for (int j = 0; j < 19; j++)
+	{
+		item_name = "";
+		item_data = "";
+		item_name = item[j].name_item;
+
+		for (int i = size_last; i < item[j].size + size_last; i++)
+		{
+			item_data += data[i];
+		}
+		size_last += item[j].size;
+		item_data += "\n";
+
+		fs << item_name;
+		fs << item_data;
+	}
+	
+	return COM_OK;
+}
+
+int ComFile::write_csv(char *data)
+{
+	
+	return COM_OK;
 }
 
 int ComFile::cmp_string(std::string a, std::string b,int len)
@@ -79,7 +137,7 @@ int ComFile::cmp_string(std::string a, std::string b,int len)
 		if (a[i] != b[i])
 		{
 			//cout << "error " << b[i] << endl;
-			return 1;
+			return COM_FAIL;
 		}
 	}
 	return 0;
@@ -96,23 +154,22 @@ int ComFile::check_header_file()
 	//cout << header_file << endl;
 	if (cmp_string(header_file, header_file_standard, 12) != 0)
 	{
-		return 1;
+		return COM_FAIL;
 	}
-	return 0;
+	return COM_OK;
 }
 
 int ComFile::check_size_file()
 {
-	if (data_text.length() != 254)
+	if (data_text.length() != LEN_FILE)
 	{
-		return 1;
+		return COM_FAIL;
 	}
-	return 0;
+	return COM_OK;
 }
 
 void ComFile::reset()
 {
 	dir_in_file = "";
-	data_text = "";
-	data_show = "";
+	data_text.clear();
 }

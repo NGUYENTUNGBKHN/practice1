@@ -35,6 +35,7 @@ void Cpractice1Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Text(pDX, IDC_EDIT1, str_show);
 	DDX_Control(pDX, IDC_COMBO1, c_cb1);
 	DDX_CBString(pDX, IDC_COMBO1, m_cb1);
+	DDX_Control(pDX, IDC_MFCEDITBROWSE2, c_editbrowe);
 }
 
 BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
@@ -43,6 +44,9 @@ BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_SHOW, &Cpractice1Dlg::OnBnClickedButtonShow)
 	ON_BN_CLICKED(IDC_BUTTON_SAVE, &Cpractice1Dlg::OnBnClickedButtonSave)
 	ON_CBN_SELCHANGE(IDC_COMBO1, &Cpractice1Dlg::OnSelchangeCombo1)
+	ON_WM_TIMER()
+//	ON_EN_CHANGE(IDC_EDIT1, &Cpractice1Dlg::OnEnChangeEdit1)
+//	ON_EN_CHANGE(IDC_EDIT2, &Cpractice1Dlg::OnEnChangeEdit2)
 END_MESSAGE_MAP()
 
 CString typeStruct[] = { L"ASCII",L"HEX",L"DEC",L"OCT",L"BIN" };
@@ -62,7 +66,7 @@ BOOL Cpractice1Dlg::OnInitDialog()
 	
 		c_cb1.AddString(typeStruct[i]);
 	}
-	m_cb1 = "ASCII";
+	//m_cb1 = "ASCII";
 	return TRUE;  // フォーカスをコントロールに設定した場合を除き、TRUE を返します。
 }
 
@@ -102,77 +106,32 @@ HCURSOR Cpractice1Dlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
-
-
 std::string __data;
+
 void Cpractice1Dlg::OnBnClickedButtonShow()
 {
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	this->UpdateData();
+	// check value of combo1 != NULL
 	if (m_cb1 == "")
 	{
 		MessageBox(NULL, L"please select type struct",0);
 		this->UpdateData(FALSE);
 		return;
 	}
-	
-	
-	ComFile f;
-	f.open(input_binary);
-	f.read();
-	//TRACE(f.data.c_str());
-	CString tg;
-	CString edit1_data;
-	__data = f.data_text;
-	if (m_cb1 == "HEX")
-	{
-		for (int i = 0; i < __data.length(); i++)
-		{
-			tg.Format(_T("%x"), __data[i]);
-			edit1_data += tg;
-			edit1_data += " ";
-		}
-		edit_box_show_data(edit1_data);
-		edit1_data = "";
-		//str_show = edit1_data;
-	}
-	else if (m_cb1 == "DEC")
-	{
-		for (int i = 0; i < __data.length(); i++)
-		{
-			tg.Format(_T("%d"), __data[i]);
-			edit1_data += tg;
-			edit1_data += " ";
-		}
-		edit_box_show_data(edit1_data);
-		edit1_data = "";
-	}
-	else if (m_cb1 == "OCT")
-	{
-		for (int i = 0; i < __data.length(); i++)
-		{
-			tg.Format(_T("%o"), __data[i]);
-			edit1_data += tg;
-			edit1_data += " ";
-		}
-		edit_box_show_data(edit1_data);
-		edit1_data = "";
-	}
-	else if (m_cb1 == "ASCII")
-	{
-		for (int i = 0; i < __data.length(); i++)
-		{
-			tg.Format(_T("%c"), __data[i]);
-			edit1_data += tg;
-			//edit1_data += " ";
-		}
-		edit_box_show_data(edit1_data);
-		edit1_data = "";
-	}
-	else  // bin
-	{
 
-	}
+	ComFile f;
+	f.open(input_binary);  /// open input file binary
+	//f.read1();
+	//str_show = f.data_text1;
+	//edit_box_show_data(f.data_text1);
+	//__data = f.data_text1;
+	
+	
+	f.read();				// read file binary
+	//TRACE(f.data.c_str());
+	__data = f.data_text;
+	change_hs(m_cb1);
 	
 	/*
 	// check header
@@ -208,13 +167,19 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 	this->UpdateData();
 
 	ComFile f;
-	f.open(output_csv);
-	if (f.write(__data) == 0)
+	f.open(output_csv);                  // open file csv
+	/*
+	if (f.write(__data) == COM_OK)       // write into file csv
 	{
 		MessageBox(NULL, L"DONE", 0);
 	}
 	f.close();
-
+	*/
+	if (f.write_csv(__data) == COM_OK)       // write into file csv
+	{
+		MessageBox(NULL, L"DONE", 0);
+	}
+	f.close();
 	this->UpdateData(FALSE);
 }
 
@@ -222,42 +187,108 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 void Cpractice1Dlg::OnSelchangeCombo1()
 {
 	// TODO: Add your control notification handler code here
-	CString tg;
-	CString edit1_data;
+	SetTimer(1,100,NULL);  // timer on interrupt change data show 
+}
 
-	if (m_cb1 == "HEX")
-	{
-		for (int i = 0; i < __data.length(); i++)
-		{
-			tg.Format(_T("%x"), __data[i]);
-			edit1_data += tg;
-			edit1_data += " ";
-		}
-		edit_box_show_data(edit1_data);
-		edit1_data = "";
-		//MessageBox(NULL,L"HEX",0);
-	}
-	else if (m_cb1 == "DEC")
-	{
-		MessageBox(NULL, L"DEC", 0);
-	}
-	else if (m_cb1 == "OCT")
-	{
-		MessageBox(NULL, L"OCT", 0);
-	}
-	else if (m_cb1 == "ASCII")
-	{
-		MessageBox(NULL, L"ASCII", 0);
-	}
-	else  // bin
-	{
-		MessageBox(NULL, L"BIN", 0);
-	}
-	this->UpdateData(FALSE);
+void Cpractice1Dlg::edit_box_show_data(char *data)
+{
+	c_editbrowe.EnableWindow();
+	str_show = data;
 }
 
 void Cpractice1Dlg::edit_box_show_data(CString data)
 {
-
+	c_editbrowe.EnableWindow();
 	str_show = data;
+}
+
+void Cpractice1Dlg::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: Add your message handler code here and/or call default
+	this->UpdateData();
+	
+	change_hs(m_cb1);
+	
+	CDialogEx::OnTimer(nIDEvent);
+	KillTimer(1);                   /// timer stop
+	this->UpdateData(FALSE); 
+}
+
+//void Cpractice1Dlg::OnEnChangeEdit1()
+//{
+//	// TODO:  If this is a RICHEDIT control, the control will not
+//	// send this notification unless you override the CDialogEx::OnInitDialog()
+//	// function and call CRichEditCtrl().SetEventMask()
+//	// with the ENM_CHANGE flag ORed into the mask.
+//
+//	// TODO:  Add your control notification handler code here
+//	m_cb1 = header_type;
+//}
+
+//void Cpractice1Dlg::OnEnChangeEdit2()
+//{
+//	// TODO:  If this is a RICHEDIT control, the control will not
+//	// send this notification unless you override the CDialogEx::OnInitDialog()
+//	// function and call CRichEditCtrl().SetEventMask()
+//	// with the ENM_CHANGE flag ORed into the mask.
+//
+//	// TODO:  Add your control notification handler code here
+//}
+
+void Cpractice1Dlg::change_hs(CString cb)
+{
+	CString tg;
+	CString edit1_data;
+	//if (str_show != "")
+	{
+		if (m_cb1 == "HEX")
+		{
+			for (int i = 0; i < __data.length(); i++)
+			{
+				tg.Format(_T("%x"), __data[i]);
+				edit1_data += tg;
+				edit1_data += " ";
+			}
+			edit_box_show_data(edit1_data);
+			edit1_data = "";
+			//str_show = edit1_data;
+		}
+		else if (m_cb1 == "DEC")
+		{
+			for (int i = 0; i < __data.length(); i++)
+			{
+				tg.Format(_T("%d"), __data[i]);
+				edit1_data += tg;
+				edit1_data += " ";
+			}
+			edit_box_show_data(edit1_data);
+			edit1_data = "";
+		}
+		else if (m_cb1 == "OCT")
+		{
+			for (int i = 0; i < __data.length(); i++)
+			{
+				tg.Format(_T("%o"), __data[i]);
+				edit1_data += tg;
+				edit1_data += " ";
+			}
+			edit_box_show_data(edit1_data);
+			edit1_data = "";
+		}
+		else if (m_cb1 == "ASCII")
+		{
+			for (int i = 0; i < __data.length(); i++)
+			{
+				tg.Format(_T("%c"), __data[i]);
+				edit1_data += tg;
+				//edit1_data += " ";
+			}
+			edit_box_show_data(edit1_data);
+			edit1_data = "";
+		}
+		else  // bin
+		{
+
+		}
+	}
 }

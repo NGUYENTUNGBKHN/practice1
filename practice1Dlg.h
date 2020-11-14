@@ -39,5 +39,11 @@ public:
 	CComboBox c_cb1;
 	CString m_cb1;
 	afx_msg void OnSelchangeCombo1();
+	void edit_box_show_data(char* data);
 	void edit_box_show_data(CString data);
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+//	afx_msg void OnEnChangeEdit1();
+//	afx_msg void OnEnChangeEdit2();
+	CMFCEditBrowseCtrl c_editbrowe;
+	void change_hs(CString cb);
 };
