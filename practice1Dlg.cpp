@@ -122,18 +122,12 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 
 	ComFile f;
 	f.open(input_binary);  /// open input file binary
-	//f.read1();
-	//str_show = f.data_text1;
-	//edit_box_show_data(f.data_text1);
-	//__data = f.data_text1;
-	
-	
 	f.read();				// read file binary
 	//TRACE(f.data.c_str());
 	__data = f.data_text;
 	change_hs(m_cb1);
 	
-	/*
+	
 	// check header
 	if (f.check_header_file() != 0)
 	{
@@ -149,7 +143,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 		str_show = "";
 		MessageBox(NULL, L"ERROR SIZE", 0);
 	}
-	*/
+	
 	TRACE("done");
 
 
@@ -168,13 +162,6 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 
 	ComFile f;
 	f.open(output_csv);                  // open file csv
-	/*
-	if (f.write(__data) == COM_OK)       // write into file csv
-	{
-		MessageBox(NULL, L"DONE", 0);
-	}
-	f.close();
-	*/
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
 	{
 		MessageBox(NULL, L"DONE", 0);

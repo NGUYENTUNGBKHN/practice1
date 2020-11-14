@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "communicate_file.h"
+#include <cstdio>
 
 item_t item[] = { {"File name,","ASCII",16},
 						{"Format Rev.,","ASCII",2},
@@ -18,8 +19,8 @@ item_t item[] = { {"File name,","ASCII",16},
 						{"Boot version,","ASCII",16},
 						{"Set timer,","ASCII",8},
 						{"Eapsed time,","ASCII",2},
-						{"a,","ASCII",2},
-						{"b,","ASCII",4} };
+						{"DipSWê›íË,","ASCII",2},
+						{"ÉIÉvÉVÉáÉìê›íË,","ASCII",4} };
 
 // contructor :
 ComFile::ComFile()
@@ -98,9 +99,14 @@ int ComFile::write_csv(std::string data)
 		return COM_FAIL;
 	}
 	
+
+	
+	//sprintf_s(b,254,"a = %x",a[0]);
+
 	std::string item_name;
 	std::string item_data;
-	std::string a;
+	std::string str_tg;
+	char* c_tg = new char[254];
 
 	int size_last = 0;
 
@@ -112,7 +118,9 @@ int ComFile::write_csv(std::string data)
 
 		for (int i = size_last; i < item[j].size + size_last; i++)
 		{
-			item_data += data[i];
+			sprintf_s(c_tg, 254, "%x-", data[i]);
+			str_tg = c_tg;
+			item_data += str_tg;
 		}
 		size_last += item[j].size;
 		item_data += "\n";

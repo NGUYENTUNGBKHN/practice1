@@ -34,7 +34,7 @@ public:
 	int check_header_file();
 	int check_size_file();
 	void close();    // open file
-	void reset();
+	void reset();	// reset 
 private:
 	std::fstream fs;       // object
 	CString dir_in_file;  // 
