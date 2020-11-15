@@ -107,6 +107,7 @@ HCURSOR Cpractice1Dlg::OnQueryDragIcon()
 }
 
 std::string __data;
+volatile bool v_show;
 
 void Cpractice1Dlg::OnBnClickedButtonShow()
 {
@@ -125,6 +126,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	f.read();				// read file binary
 	//TRACE(f.data.c_str());
 	__data = f.data_text;
+	v_show = 1;
 	change_hs(m_cb1);
 	
 	
@@ -144,15 +146,11 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 		MessageBox(NULL, L"ERROR SIZE", 0);
 	}
 	
-	TRACE("done");
-
-
+	//TRACE("done");
 	f.close();
 	
 	this->UpdateData(FALSE);
 }
-
-
 
 
 void Cpractice1Dlg::OnBnClickedButtonSave()
@@ -226,8 +224,9 @@ void Cpractice1Dlg::change_hs(CString cb)
 {
 	CString tg;
 	CString edit1_data;
-	//if (str_show != "")
+	if (str_show != "" || v_show == 1)
 	{
+		v_show = 0;
 		if (m_cb1 == "HEX")
 		{
 			for (int i = 0; i < __data.length(); i++)

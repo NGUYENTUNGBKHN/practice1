@@ -2,25 +2,25 @@
 #include "communicate_file.h"
 #include <cstdio>
 
-item_t item[] = { {"File name,","ASCII",16},
-						{"Format Rev.,","ASCII",2},
-						{"Total size,","ASCII",4},
-						{"USB PID,","ASCII",2},
-						{"Reserved,","ASCII",40},
-						{"Category,","ASCII",16},
-						{"Category ID,","ASCII",2},
-						{"Format Rev.,","ASCII",2},
-						{"Toltal size,","ASCII",4},
-						{"Reserved,","ASCII",8},
-						{"Model,","ASCII",32},
+item_t item[] = {		{"File name,",		"ASCII",16},
+						{"Format Rev.,",	"HEX",2},
+						{"Total size,",		"UINT32",4},
+						{"USB PID,",		"HEX",2},
+						{"Reserved,",		"HEX",40},
+						{"Category,",		"ASCII",16},
+						{"Category ID,",	"HEX",2},
+						{"Format Rev.,",	"HEX",2},
+						{"Toltal size,",	"UINT32",4},
+						{"Reserved,",		"HEX",8},
+						{"Model,",			"ASCII",32},
 						{"Serial number 1,","ASCII",12},
 						{"Serial number 2,","ASCII",12},
 						{"SoftWare version,","ASCII",64},
-						{"Boot version,","ASCII",16},
-						{"Set timer,","ASCII",8},
-						{"Eapsed time,","ASCII",2},
-						{"DipSW設定,","ASCII",2},
-						{"オプション設定,","ASCII",4} };
+						{"Boot version,",	"ASCII",16},
+						{"Set timer,",		"INT64",8},
+						{"Eapsed time,",	"INT64",2},
+						{"DipSW設定,",		"HEX",2},
+						{"オプション設定,",	"HEX",4} };
 
 // contructor :
 ComFile::ComFile()
@@ -93,34 +93,48 @@ int ComFile::write(std::string data)
 
 int ComFile::write_csv(std::string data)
 {
+	std::string item_name;
+	std::string item_data;
+	std::string str_tg;
+	char* c_tg = new char[254];
+	int size_last = 0;
 	// sure file open
 	if (!fs.is_open())
 	{
 		return COM_FAIL;
 	}
-	
-
-	
-	//sprintf_s(b,254,"a = %x",a[0]);
-
-	std::string item_name;
-	std::string item_data;
-	std::string str_tg;
-	char* c_tg = new char[254];
-
-	int size_last = 0;
 
 	for (int j = 0; j < 19; j++)
 	{
 		item_name = "";
 		item_data = "";
 		item_name = item[j].name_item;
-
-		for (int i = size_last; i < item[j].size + size_last; i++)
+		if (item[j].num_base_sys == "HEX")
 		{
-			sprintf_s(c_tg, 254, "%x-", data[i]);
-			str_tg = c_tg;
-			item_data += str_tg;
+			item_data += "0x";
+			for (int i = size_last; i < item[j].size + size_last; i++)
+			{
+				sprintf_s(c_tg, 254, "%x", data[i]);
+				str_tg = c_tg;
+				item_data += str_tg;
+			}
+			
+		}
+		else if (item[j].num_base_sys == "ASCII")
+		{
+			for (int i = size_last; i < item[j].size + size_last; i++)
+			{
+				item_data += data[i];
+			}
+		}
+		else
+		{
+			for (int i = size_last; i < item[j].size + size_last; i++)
+			{
+				sprintf_s(c_tg, 254, "%d", data[i]);
+				str_tg = c_tg;
+				item_data += str_tg;
+			}
 		}
 		size_last += item[j].size;
 		item_data += "\n";
