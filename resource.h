@@ -1,6 +1,6 @@
 ﻿//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by practice1.rc
+// Microsoft Visual C++ で生成されたインクルード ファイル。
+// practice1.rc で使用
 //
 #define IDD_PRACTICE1_DIALOG            102
 #define IDR_MAINFRAME                   128

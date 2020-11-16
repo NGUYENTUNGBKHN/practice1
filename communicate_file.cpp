@@ -97,6 +97,8 @@ int ComFile::write_csv(std::string data)
 	std::string item_data;
 	std::string str_tg;
 	char* c_tg = new char[254];
+	unsigned long sum = 0;
+	unsigned long trung_gian = 0;
 	int size_last = 0;
 	// sure file open
 	if (!fs.is_open())
@@ -129,12 +131,16 @@ int ComFile::write_csv(std::string data)
 		}
 		else
 		{
+			sum = 0;
 			for (int i = size_last; i < item[j].size + size_last; i++)
 			{
-				sprintf_s(c_tg, 254, "%d", data[i]);
-				str_tg = c_tg;
-				item_data += str_tg;
+				trung_gian = (unsigned char)data[i];
+				sum = sum + (trung_gian << (8 * (3 - i + size_last)));
+				TRACE(sum);
 			}
+			sprintf_s(c_tg, 254, "%ld", sum);
+			str_tg = c_tg;
+			item_data += str_tg;
 		}
 		size_last += item[j].size;
 		item_data += "\n";

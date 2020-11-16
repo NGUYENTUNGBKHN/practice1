@@ -36,6 +36,7 @@ void Cpractice1Dlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_COMBO1, c_cb1);
 	DDX_CBString(pDX, IDC_COMBO1, m_cb1);
 	DDX_Control(pDX, IDC_MFCEDITBROWSE2, c_editbrowe);
+	DDX_Control(pDX, IDC_BUTTON_SAVE, c_btn_save);
 }
 
 BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
@@ -47,6 +48,7 @@ BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
 	ON_WM_TIMER()
 //	ON_EN_CHANGE(IDC_EDIT1, &Cpractice1Dlg::OnEnChangeEdit1)
 //	ON_EN_CHANGE(IDC_EDIT2, &Cpractice1Dlg::OnEnChangeEdit2)
+ON_BN_CLICKED(IDOK, &Cpractice1Dlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 CString typeStruct[] = { L"ASCII",L"HEX",L"DEC",L"OCT",L"BIN" };
@@ -113,6 +115,15 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 {
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	this->UpdateData();
+
+	//check box 
+	if (input_binary == "")
+	{
+		MessageBox(NULL, L"please select file binary", 0);
+		this->UpdateData(FALSE);
+		return;
+	}
+
 	// check value of combo1 != NULL
 	if (m_cb1 == "")
 	{
@@ -158,6 +169,20 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	this->UpdateData();
 
+	if (output_csv == "")
+	{
+		MessageBox(NULL, L"please select file CSV", 0);
+		this->UpdateData(FALSE);
+		return;
+	}
+
+	if ((__data == "") || (str_show == ""))
+	{
+		MessageBox(NULL, L"ERROR ", 0);
+		this->UpdateData(FALSE);
+		return;
+	}
+
 	ComFile f;
 	f.open(output_csv);                  // open file csv
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
@@ -178,12 +203,15 @@ void Cpractice1Dlg::OnSelchangeCombo1()
 void Cpractice1Dlg::edit_box_show_data(char *data)
 {
 	c_editbrowe.EnableWindow();
+	c_btn_save.EnableWindow();
 	str_show = data;
 }
 
 void Cpractice1Dlg::edit_box_show_data(CString data)
 {
+
 	c_editbrowe.EnableWindow();
+	c_btn_save.EnableWindow();
 	str_show = data;
 }
 
@@ -277,4 +305,12 @@ void Cpractice1Dlg::change_hs(CString cb)
 
 		}
 	}
+}
+
+
+void Cpractice1Dlg::OnBnClickedOk()
+{
+	// TODO: ここにコントロール通知ハンドラー コードを追加します。
+	MessageBox(NULL, L"ERROR ", 0);
+	CDialogEx::OnOK();
 }
