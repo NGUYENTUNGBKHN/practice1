@@ -35,9 +35,11 @@ public:
 	int check_size_file();
 	void close();    // open file
 	void reset();	// reset 
+	int create_file_csv(CString dir_out_file);  // create file
 private:
 	std::fstream fs;       // object
 	CString dir_in_file;  // 
+
 	int cmp_string(std::string a, std::string b, int len);
 
 	
