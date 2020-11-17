@@ -119,7 +119,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	//check box 
 	if (input_binary == "")
 	{
-		MessageBox(NULL, L"please select file binary", 0);
+		MessageBoxW((LPCWSTR)L"Please select file .bin", (LPCWSTR)L"SHOW FILE", MB_ICONASTERISK);
 		this->UpdateData(FALSE);
 		return;
 	}
@@ -127,7 +127,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	// check value of combo1 != NULL
 	if (m_cb1 == "")
 	{
-		MessageBox(NULL, L"please select type struct",0);
+		MessageBoxW((LPCWSTR)L"Please select Base number.\n Ex: ACSII, DEC, HEX ...v..v", (LPCWSTR)L"SHOW FILE", MB_ICONASTERISK);
 		this->UpdateData(FALSE);
 		return;
 	}
@@ -147,7 +147,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	{
 		f.reset();
 		str_show = "";
-		MessageBox(NULL, L"ERROR HEADER", 0);
+		MessageBoxW((LPCWSTR)L"Header file is incorrect.", (LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
 	}
 
 	//check size file
@@ -155,7 +155,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	{
 		f.reset();
 		str_show = "";
-		MessageBox(NULL, L"ERROR SIZE", 0);
+		MessageBoxW((LPCWSTR)L"Size file is incorrect.", (LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
 	}
 	
 	//TRACE("done");
@@ -172,24 +172,40 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 
 	if (output_csv == "")
 	{
-		MessageBox(NULL, L"please select file CSV", 0);
+		MessageBoxW((LPCWSTR)L"Please select file csv", (LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
 		this->UpdateData(FALSE);
 		return;
 	}
 
 	if ((__data == "") || (str_show == ""))
 	{
-		MessageBox(NULL, L"ERROR ", 0);
+		MessageBoxW((LPCWSTR)L"Data empty !", (LPCWSTR)L"SAVE FILE", MB_ICONERROR);
 		this->UpdateData(FALSE);
 		return;
 	}
 
 	ComFile f;
-	f.create_file_csv(output_csv);
-	f.open(output_csv);                  // open file csv
+	
+	if (f.open(output_csv) != COM_OK)// open file csv
+	{
+		
+		int selected_user = MessageBoxW((LPCWSTR)L"FILE NOT EXITS \n Do you want to create new file", 
+										(LPCWSTR)L"CREATE FILE", 
+										MB_YESNO | MB_ICONQUESTION);
+		if (selected_user == IDYES)
+		{
+			f.create_file_csv(output_csv);
+		}
+		else
+		{
+			return;
+		}
+		f.open(output_csv);
+	}
+
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
 	{
-		MessageBox(NULL, L"DONE", 0);
+		MessageBoxW((LPCWSTR)L"DONE", (LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
 	}
 	f.close();
 	this->UpdateData(FALSE);
@@ -313,6 +329,15 @@ void Cpractice1Dlg::change_hs(CString cb)
 void Cpractice1Dlg::OnBnClickedOk()
 {
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-	//MessageBox(NULL, L"ERROR ", 0);
+	int select_user = MessageBoxW((LPCWSTR)L"Do you want to quit ?",(LPCWSTR)L"課題①ーMFC", MB_ICONQUESTION | MB_YESNO);
+	if (select_user == IDYES)
+	{
+
+	}
+	else
+	{
+		return;
+	}
+
 	CDialogEx::OnOK();
 }
