@@ -136,7 +136,7 @@ int ComFile::write_csv(std::string data)
 			{
 				trung_gian = (unsigned char)data[i];
 				sum = sum + (trung_gian << (8 * (3 - i + size_last)));
-				TRACE(sum);
+				//TRACE(sum);
 			}
 			sprintf_s(c_tg, 254, "%ld", sum);
 			str_tg = c_tg;
@@ -202,9 +202,10 @@ void ComFile::reset()
 	data_text.clear();
 }
 
-void ComFile::create_file(CString dir_out_file)
+int ComFile::create_file_csv(CString dir_out_file)
 {
 	std::ofstream create_file(dir_out_file);
-	create_file.close();
 
+	create_file.close();
+	return 0;
 }

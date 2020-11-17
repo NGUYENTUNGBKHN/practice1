@@ -185,7 +185,7 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 	}
 
 	ComFile f;
-	f.create_file(input_binary);
+	f.create_file_csv(output_csv);
 	f.open(output_csv);                  // open file csv
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
 	{
