@@ -133,6 +133,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	}
 
 	ComFile f;
+
 	f.open(input_binary);  /// open input file binary
 	f.read();				// read file binary
 	//TRACE(f.data.c_str());
@@ -184,6 +185,7 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 	}
 
 	ComFile f;
+	f.create_file(input_binary);
 	f.open(output_csv);                  // open file csv
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
 	{
@@ -311,6 +313,6 @@ void Cpractice1Dlg::change_hs(CString cb)
 void Cpractice1Dlg::OnBnClickedOk()
 {
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-	MessageBox(NULL, L"ERROR ", 0);
+	//MessageBox(NULL, L"ERROR ", 0);
 	CDialogEx::OnOK();
 }

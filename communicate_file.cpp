@@ -201,3 +201,10 @@ void ComFile::reset()
 	dir_in_file = "";
 	data_text.clear();
 }
+
+void ComFile::create_file(CString dir_out_file)
+{
+	std::ofstream create_file(dir_out_file);
+	create_file.close();
+
+}
