@@ -124,44 +124,50 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 		return;
 	}
 
-	// check value of combo1 != NULL
-	if (m_cb1 == "")
-	{
-		MessageBoxW((LPCWSTR)L"Please select Base number.\n Ex: ACSII, DEC, HEX ...v..v", 
-					(LPCWSTR)L"SHOW FILE", MB_ICONASTERISK);
-		this->UpdateData(FALSE);
-		return;
-	}
+	//// check value of combo1 != NULL
+	//if (m_cb1 == "")
+	//{
+	//	MessageBoxW((LPCWSTR)L"Please select Base number.\n Ex: ACSII, DEC, HEX ...v..v", 
+	//				(LPCWSTR)L"SHOW FILE", MB_ICONASTERISK);
+	//	this->UpdateData(FALSE);
+	//	return;
+	//}
+
 
 	ComFile f;
-
+	// reset data if show 
+	f.reset();
+	m_cb1 = "ASCII";
 	f.open(input_binary);  /// open input file binary
 	f.read();				// read file binary
-	//TRACE(f.data.c_str());
-	__data = f.data_text;
-	v_show = 1;
-	change_hs(m_cb1);
 	
 	
 	// check header
 	if (f.check_header_file() != 0)
 	{
-		f.reset();
+		//f.reset();
 		str_show = "";
 		MessageBoxW((LPCWSTR)L"Header file is incorrect.", 
-					(LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
+					(LPCWSTR)L"SHOW FILE", MB_ICONERROR);
+		goto error;
 	}
 
 	//check size file
 	if (f.check_size_file() != 0)
 	{
-		f.reset();
+		int b = f.check_size_file();
+		//f.reset();
 		str_show = "";
 		MessageBoxW((LPCWSTR)L"Size file is incorrect.", 
-					(LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
+					(LPCWSTR)L"SHOW FILE", MB_ICONERROR);
+		goto error;
 	}
 	
+	__data = f.data_text;
+	v_show = 1;
+	change_hs(m_cb1);
 	//TRACE("done");
+	error:
 	f.close();
 	
 	this->UpdateData(FALSE);

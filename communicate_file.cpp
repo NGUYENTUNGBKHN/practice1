@@ -189,9 +189,9 @@ int ComFile::check_header_file()
 
 int ComFile::check_size_file()
 {
-	if (data_text.length() != LEN_FILE)
+	if (data_text.size() != LEN_FILE)
 	{
-		return COM_FAIL;
+		return 1;
 	}
 	return COM_OK;
 }
