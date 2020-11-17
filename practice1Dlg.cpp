@@ -127,7 +127,8 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	// check value of combo1 != NULL
 	if (m_cb1 == "")
 	{
-		MessageBoxW((LPCWSTR)L"Please select Base number.\n Ex: ACSII, DEC, HEX ...v..v", (LPCWSTR)L"SHOW FILE", MB_ICONASTERISK);
+		MessageBoxW((LPCWSTR)L"Please select Base number.\n Ex: ACSII, DEC, HEX ...v..v", 
+					(LPCWSTR)L"SHOW FILE", MB_ICONASTERISK);
 		this->UpdateData(FALSE);
 		return;
 	}
@@ -147,7 +148,8 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	{
 		f.reset();
 		str_show = "";
-		MessageBoxW((LPCWSTR)L"Header file is incorrect.", (LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
+		MessageBoxW((LPCWSTR)L"Header file is incorrect.", 
+					(LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
 	}
 
 	//check size file
@@ -155,7 +157,8 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	{
 		f.reset();
 		str_show = "";
-		MessageBoxW((LPCWSTR)L"Size file is incorrect.", (LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
+		MessageBoxW((LPCWSTR)L"Size file is incorrect.", 
+					(LPCWSTR)L"SHOW FILE", MB_ICONWARNING);
 	}
 	
 	//TRACE("done");
@@ -172,14 +175,16 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 
 	if (output_csv == "")
 	{
-		MessageBoxW((LPCWSTR)L"Please select file csv", (LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+		MessageBoxW((LPCWSTR)L"Please select file csv", 
+					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
 		this->UpdateData(FALSE);
 		return;
 	}
 
 	if ((__data == "") || (str_show == ""))
 	{
-		MessageBoxW((LPCWSTR)L"Data empty !", (LPCWSTR)L"SAVE FILE", MB_ICONERROR);
+		MessageBoxW((LPCWSTR)L"Data empty !", 
+					(LPCWSTR)L"SAVE FILE", MB_ICONERROR);
 		this->UpdateData(FALSE);
 		return;
 	}
@@ -205,7 +210,8 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
 	{
-		MessageBoxW((LPCWSTR)L"DONE", (LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+		MessageBoxW((LPCWSTR)L"DONE", 
+					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
 	}
 	f.close();
 	this->UpdateData(FALSE);
@@ -329,7 +335,8 @@ void Cpractice1Dlg::change_hs(CString cb)
 void Cpractice1Dlg::OnBnClickedOk()
 {
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-	int select_user = MessageBoxW((LPCWSTR)L"Do you want to quit ?",(LPCWSTR)L"課題①ーMFC", MB_ICONQUESTION | MB_YESNO);
+	int select_user = MessageBoxW((LPCWSTR)L"Do you want to quit ?",
+				(LPCWSTR)L"課題①ーMFC", MB_ICONQUESTION | MB_YESNO);
 	if (select_user == IDYES)
 	{
 
