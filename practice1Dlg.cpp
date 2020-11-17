@@ -173,14 +173,25 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	this->UpdateData();
 
+
+	// check link File CSV is empty ?
 	if (output_csv == "")
 	{
-		MessageBoxW((LPCWSTR)L"Please select file csv", 
-					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
-		this->UpdateData(FALSE);
-		return;
+		int res = MessageBoxW((LPCWSTR)L"Do you want to save file into default folder?", 
+					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK | MB_YESNO);
+		if (res == IDYES)
+		{
+			output_csv = "./jcm_test.csv";
+		}
+		else
+		{
+			MessageBoxW((LPCWSTR)L"Please select folder save file csv",
+						(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+			return;
+		}
 	}
 
+	// check data and edit box show data
 	if ((__data == "") || (str_show == ""))
 	{
 		MessageBoxW((LPCWSTR)L"Data empty !", 
@@ -191,21 +202,39 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 
 	ComFile f;
 	
-	if (f.open(output_csv) != COM_OK)// open file csv
+	if (f.open(output_csv) != COM_OK)// open file csv - suceess
 	{
 		
-		int selected_user = MessageBoxW((LPCWSTR)L"FILE NOT EXITS \n Do you want to create new file", 
+		int selected_user = MessageBoxW((LPCWSTR)L"FILE NOT EXIST \n Do you want to create new file", 
 										(LPCWSTR)L"CREATE FILE", 
 										MB_YESNO | MB_ICONQUESTION);
 		if (selected_user == IDYES)
 		{
-			f.create_file_csv(output_csv);
+			f.create_file_csv(output_csv);  // create file if user want create new file 
 		}
 		else
 		{
-			return;
+			return;  // quit
 		}
 		f.open(output_csv);
+	}
+	else      // open fail
+	{
+		int selected_user_2 = MessageBoxW((LPCWSTR)L"FILE EXISTED \n Do you want to override this file?",
+											(LPCWSTR)L"CREATE FILE",
+			MB_YESNO | MB_ICONQUESTION);
+		if (selected_user_2 == IDYES)
+		{
+			// if yes override into existed file 
+		}
+		else
+		{
+			f.close();
+			output_csv.Delete(output_csv.GetLength() - 4, 4);
+			output_csv += "1.csv";
+			f.create_file_csv(output_csv);
+			f.open(output_csv);
+		}
 	}
 
 	if (f.write_csv(__data) == COM_OK)       // write into file csv
