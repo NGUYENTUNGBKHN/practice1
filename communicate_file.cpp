@@ -58,7 +58,7 @@ int ComFile::read1()
 	{
 		return COM_FAIL;
 	}
-	fs.read(data_text1, LEN_FILE);
+	while(fs.read(data_text1, 254))
 	return COM_OK;
 }
 

@@ -49,7 +49,6 @@ BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
 //	ON_EN_CHANGE(IDC_EDIT1, &Cpractice1Dlg::OnEnChangeEdit1)
 //	ON_EN_CHANGE(IDC_EDIT2, &Cpractice1Dlg::OnEnChangeEdit2)
 ON_BN_CLICKED(IDOK, &Cpractice1Dlg::OnBnClickedOk)
-ON_BN_CLICKED(IDC_BUTTON1, &Cpractice1Dlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 CString typeStruct[] = { L"ASCII",L"HEX",L"DEC",L"OCT",L"BIN" };
@@ -320,9 +319,14 @@ void Cpractice1Dlg::change_hs(CString cb)
 		{
 			for (int i = 0; i < __data.length(); i++)
 			{
-				tg.Format(_T("%x|"), (char)__data[i]);
+				tg.Format(_T("%x"), (unsigned char)__data[i]);
+				if (tg.GetLength() == 1)
+				{
+					edit1_data += "0";
+				}
 				edit1_data += tg;
 				edit1_data += " ";
+				edit1_data.MakeUpper();
 			}
 			edit_box_show_data(edit1_data);
 			edit1_data = "";
@@ -363,7 +367,25 @@ void Cpractice1Dlg::change_hs(CString cb)
 		}
 		else  // bin
 		{
-
+			for (int i = 0; i < __data.length(); i++)
+			{
+				tg = "";
+				for (int m = 7; m >= 0; m--)
+				{
+					if (((unsigned char)__data[i] >> m) % 2 == 0)
+					{
+						tg += "0";
+					}
+					else
+					{
+						tg += "1";
+					}
+				}
+				edit1_data += tg;
+				edit1_data += "-";
+			}
+			edit_box_show_data(edit1_data);
+			edit1_data = "";
 		}
 	}
 }
@@ -386,15 +408,3 @@ void Cpractice1Dlg::OnBnClickedOk()
 	CDialogEx::OnOK();
 }
 
-
-void Cpractice1Dlg::OnBnClickedButton1()
-{
-	// TODO: ここにコントロール通知ハンドラー コードを追加します。
-	ComFile f;
-	CString c;
-	f.open(input_binary);
-	f.read1();
-	edit_box_show_data(f.data_text1);
-	f.close();
-
-}
