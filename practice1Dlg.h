@@ -48,4 +48,5 @@ public:
 	void change_hs(CString cb);
 	CButton c_btn_save;
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedButton1();
 };

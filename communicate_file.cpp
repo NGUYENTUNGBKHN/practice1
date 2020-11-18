@@ -18,7 +18,7 @@ item_t item[] = {		{"File name,",		"ASCII",16},
 						{"SoftWare version,","ASCII",64},
 						{"Boot version,",	"ASCII",16},
 						{"Set timer,",		"INT64",8},
-						{"Eapsed time,",	"INT64",2},
+						{"Eapsed time,",	"INT64",8},
 						{"DipSWê›íË,",		"HEX",2},
 						{"ÉIÉvÉVÉáÉìê›íË,",	"HEX",4} };
 
@@ -59,7 +59,6 @@ int ComFile::read1()
 		return COM_FAIL;
 	}
 	fs.read(data_text1, LEN_FILE);
-	//TRACE(data_text1);
 	return COM_OK;
 }
 

@@ -49,6 +49,7 @@ BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
 //	ON_EN_CHANGE(IDC_EDIT1, &Cpractice1Dlg::OnEnChangeEdit1)
 //	ON_EN_CHANGE(IDC_EDIT2, &Cpractice1Dlg::OnEnChangeEdit2)
 ON_BN_CLICKED(IDOK, &Cpractice1Dlg::OnBnClickedOk)
+ON_BN_CLICKED(IDC_BUTTON1, &Cpractice1Dlg::OnBnClickedButton1)
 END_MESSAGE_MAP()
 
 CString typeStruct[] = { L"ASCII",L"HEX",L"DEC",L"OCT",L"BIN" };
@@ -139,6 +140,7 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	f.reset();
 	m_cb1 = "ASCII";
 	f.open(input_binary);  /// open input file binary
+	//f.read1();
 	f.read();				// read file binary
 	
 	
@@ -318,7 +320,7 @@ void Cpractice1Dlg::change_hs(CString cb)
 		{
 			for (int i = 0; i < __data.length(); i++)
 			{
-				tg.Format(_T("%x"), __data[i]);
+				tg.Format(_T("%x|"), (char)__data[i]);
 				edit1_data += tg;
 				edit1_data += " ";
 			}
@@ -330,7 +332,7 @@ void Cpractice1Dlg::change_hs(CString cb)
 		{
 			for (int i = 0; i < __data.length(); i++)
 			{
-				tg.Format(_T("%d"), __data[i]);
+				tg.Format(_T("%d"), (unsigned char)__data[i]);
 				edit1_data += tg;
 				edit1_data += " ";
 			}
@@ -341,7 +343,7 @@ void Cpractice1Dlg::change_hs(CString cb)
 		{
 			for (int i = 0; i < __data.length(); i++)
 			{
-				tg.Format(_T("%o"), __data[i]);
+				tg.Format(_T("%o"), (unsigned char)__data[i]);
 				edit1_data += tg;
 				edit1_data += " ";
 			}
@@ -352,7 +354,7 @@ void Cpractice1Dlg::change_hs(CString cb)
 		{
 			for (int i = 0; i < __data.length(); i++)
 			{
-				tg.Format(_T("%c"), __data[i]);
+				tg.Format(_T("%c"), (unsigned char)__data[i]);
 				edit1_data += tg;
 				//edit1_data += " ";
 			}
@@ -382,4 +384,17 @@ void Cpractice1Dlg::OnBnClickedOk()
 	}
 
 	CDialogEx::OnOK();
+}
+
+
+void Cpractice1Dlg::OnBnClickedButton1()
+{
+	// TODO: ここにコントロール通知ハンドラー コードを追加します。
+	ComFile f;
+	CString c;
+	f.open(input_binary);
+	f.read1();
+	edit_box_show_data(f.data_text1);
+	f.close();
+
 }
