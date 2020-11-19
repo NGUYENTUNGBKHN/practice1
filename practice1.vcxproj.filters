@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="excel">
+      <UniqueIdentifier>{aace5327-9f53-409a-8b8a-88e2c7c7d621}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="practice1.h">
@@ -36,6 +39,45 @@
     <ClInclude Include="communicate_file.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="lib_excel\PathManager.hpp">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\UTF8Encoder.hpp">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\Chart.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\Chartsheet.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\Drawing.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\SimpleXlsxDef.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\Workbook.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\Worksheet.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Xlsx\XlsxHeaders.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\XLSXColors\clsRGBColorRecord.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\XLSXColors\XLSXColorLib.h">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\XMLWriter.hpp">
+      <Filter>excel</Filter>
+    </ClInclude>
+    <ClInclude Include="lib_excel\Zip\zip.h">
+      <Filter>excel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="practice1.cpp">
@@ -49,6 +91,39 @@
     </ClCompile>
     <ClCompile Include="communicate_file.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\PathManager.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\Chart.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\Chartsheet.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\Drawing.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\SimpleXlsxDef.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\Workbook.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\Worksheet.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Xlsx\XlsxHeaders.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\XLSXColors\clsRGBColorRecord.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\XLSXColors\XLSXColorLib.cpp">
+      <Filter>excel</Filter>
+    </ClCompile>
+    <ClCompile Include="lib_excel\Zip\zip.cpp">
+      <Filter>excel</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
