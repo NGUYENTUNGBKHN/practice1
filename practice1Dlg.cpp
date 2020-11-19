@@ -109,7 +109,6 @@ HCURSOR Cpractice1Dlg::OnQueryDragIcon()
 }
 
 std::string __data;
-volatile bool v_show;
 
 void Cpractice1Dlg::OnBnClickedButtonShow()
 {
@@ -148,8 +147,8 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 	{
 		//f.reset();
 		str_show = "";
-		MessageBoxW((LPCWSTR)L"Header file is incorrect.", 
-					(LPCWSTR)L"SHOW FILE", MB_ICONERROR);
+		MessageBoxW((LPCWSTR)L"Header file is incorrect.\nCode:E00-0001", 
+					(LPCWSTR)L"ERROR", MB_ICONERROR);
 		goto error;
 	}
 
@@ -159,14 +158,13 @@ void Cpractice1Dlg::OnBnClickedButtonShow()
 		int b = f.check_size_file();
 		//f.reset();
 		str_show = "";
-		MessageBoxW((LPCWSTR)L"Size file is incorrect.", 
-					(LPCWSTR)L"SHOW FILE", MB_ICONERROR);
+		MessageBoxW((LPCWSTR)L"Size file is incorrect.\nCode:E00-0002", 
+					(LPCWSTR)L"ERROR", MB_ICONERROR);
 		goto error;
 	}
 	
 	__data = f.data_text;
-	v_show = 1;
-	change_hs(m_cb1);
+	update_data_show(m_cb1,TRUE);
 	//TRACE("done");
 	error:
 	f.close();
@@ -280,7 +278,7 @@ void Cpractice1Dlg::OnTimer(UINT_PTR nIDEvent)
 	// TODO: Add your message handler code here and/or call default
 	this->UpdateData();
 	
-	change_hs(m_cb1);
+	update_data_show(m_cb1,FALSE);
 	
 	CDialogEx::OnTimer(nIDEvent);
 	KillTimer(1);                   /// timer stop
@@ -308,13 +306,13 @@ void Cpractice1Dlg::OnTimer(UINT_PTR nIDEvent)
 //	// TODO:  Add your control notification handler code here
 //}
 
-void Cpractice1Dlg::change_hs(CString cb)
+void Cpractice1Dlg::update_data_show(CString cb, bool status_btn_show)
 {
 	CString tg;
 	CString edit1_data;
-	if (str_show != "" || v_show == 1)
+	if (str_show != "" || status_btn_show == 1)
 	{
-		v_show = 0;
+		status_btn_show = 0;
 		if (m_cb1 == "HEX")
 		{
 			for (int i = 0; i < __data.length(); i++)

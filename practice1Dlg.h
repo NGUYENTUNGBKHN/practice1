@@ -45,7 +45,7 @@ public:
 //	afx_msg void OnEnChangeEdit1();
 //	afx_msg void OnEnChangeEdit2();
 	CMFCEditBrowseCtrl c_editbrowe;
-	void change_hs(CString cb);
+	void update_data_show(CString cb, bool status_btn_show);
 	CButton c_btn_save;
 	afx_msg void OnBnClickedOk();
 };
