@@ -23,7 +23,7 @@
 
 #include "Chart.h"
 #include "XlsxHeaders.h"
-#include "pch.h"
+
 #include "../PathManager.hpp"
 #include "../XMLWriter.hpp"
 

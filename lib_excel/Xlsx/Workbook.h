@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_WORKBOOK_H
-//#define XLSX_WORKBOOK_H
+#ifndef XLSX_WORKBOOK_H
+#define XLSX_WORKBOOK_H
 
 #include "SimpleXlsxDef.h"
 
@@ -254,4 +254,4 @@ class CWorkbook
 
 }	// namespace SimpleXlsx
 
-//#endif	// XLSX_WORKBOOK_H
+#endif	// XLSX_WORKBOOK_H

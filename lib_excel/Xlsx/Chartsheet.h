@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_CHARTSHEET_H
-//#define XLSX_CHARTSHEET_H
+#ifndef XLSX_CHARTSHEET_H
+#define XLSX_CHARTSHEET_H
 
 #include <stdlib.h>
 
@@ -74,4 +74,4 @@ namespace SimpleXlsx
 
 }	// namespace SimpleXlsx
 
-//#endif	// XLSX_CHARTSHEET_H
+#endif	// XLSX_CHARTSHEET_H

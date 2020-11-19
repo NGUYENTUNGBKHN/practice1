@@ -27,7 +27,7 @@
 #include <iostream>
 
 #include <stdint.h>
-//#include "pch.h"
+
 #include "PathManager.hpp"
 
 #ifdef _WIN32

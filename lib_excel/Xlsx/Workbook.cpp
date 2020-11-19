@@ -25,7 +25,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <utility>
-#include "pch.h"
 
 #ifdef _WIN32
 #include <windows.h>	// for ZIP

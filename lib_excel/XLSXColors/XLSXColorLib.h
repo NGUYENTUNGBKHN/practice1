@@ -1,5 +1,5 @@
-//#ifndef XLSXCOLORLIB_H_INCLUDED
-//#define XLSXCOLORLIB_H_INCLUDED
+#ifndef XLSXCOLORLIB_H_INCLUDED
+#define XLSXCOLORLIB_H_INCLUDED
 #include <map>
 #include "clsRGBColorRecord.h"
 namespace SimpleXlsx
@@ -17,4 +17,4 @@ namespace SimpleXlsx
  extern void make_grayscale10(XLSXColorLib & xlib);
  extern void make_excell_like_named_colors(XLSXColorLib & xlib);
 }
-//#endif // XLSXCOLORLIB_H_INCLUDED
+#endif // XLSXCOLORLIB_H_INCLUDED

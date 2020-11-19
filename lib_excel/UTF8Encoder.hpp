@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef UTF8ENCODER_H
-//#define UTF8ENCODER_H
+#ifndef UTF8ENCODER_H
+#define UTF8ENCODER_H
 
 #include <assert.h>
 #include <stdint.h>
@@ -63,4 +63,4 @@ class UTF8Encoder
 };
 
 
-//#endif // UTF8ENCODER_H
+#endif // UTF8ENCODER_H

@@ -20,7 +20,6 @@
 */
 
 #include "SimpleXlsxDef.h"
-#include "pch.h"
 
 void SimpleXlsx::Font::Clear()
 {

@@ -19,6 +19,9 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
+#ifndef XLSX_CCHART_H
+#define XLSX_CCHART_H
+
 #include "SimpleXlsxDef.h"
 
 // ****************************************************************************
@@ -632,3 +635,4 @@ class CChart
 
 }
 
+#endif // XLSX_CCHART_H

@@ -4,8 +4,6 @@
 #include <algorithm>
 #include "clsRGBColorRecord.h"
 #include <string.h>
-#include "pch.h"
-
 namespace SimpleXlsx
 {
 

@@ -20,7 +20,6 @@
 */
 
 #include "XlsxHeaders.h"
-#include "pch.h"
 
 namespace SimpleXlsx
 {

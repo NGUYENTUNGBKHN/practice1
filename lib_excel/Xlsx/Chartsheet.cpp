@@ -25,6 +25,7 @@
 #include "Drawing.h"
 #include "Worksheet.h"
 #include "XlsxHeaders.h"
+
 #include "../PathManager.hpp"
 #include "../XMLWriter.hpp"
 

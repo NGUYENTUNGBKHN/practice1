@@ -1,5 +1,5 @@
-//#ifndef CLSRGBCOLORRECORD_H
-//#define CLSRGBCOLORRECORD_H
+#ifndef CLSRGBCOLORRECORD_H
+#define CLSRGBCOLORRECORD_H
 #include <string>
 namespace SimpleXlsx
 {
@@ -25,4 +25,4 @@ class clsRGBColorRecord
     private:
 };
 };
-//#endif // CLSRGBCOLORRECORD_H
+#endif // CLSRGBCOLORRECORD_H

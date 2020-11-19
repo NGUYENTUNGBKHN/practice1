@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_DRAWING_H
-//#define XLSX_DRAWING_H
+#ifndef XLSX_DRAWING_H
+#define XLSX_DRAWING_H
 
 #include "SimpleXlsxDef.h"
 
@@ -119,4 +119,4 @@ namespace SimpleXlsx
 
 }
 
-//#endif // XLSX_DRAWING_H
+#endif // XLSX_DRAWING_H

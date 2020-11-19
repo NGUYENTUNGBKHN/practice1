@@ -1,6 +1,4 @@
 #include "XLSXColorLib.h"
-#include "pch.h"
-
 namespace SimpleXlsx
 {
 XLSXColorLib::~XLSXColorLib(){};

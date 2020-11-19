@@ -40,7 +40,6 @@
 
 #include <stdio.h>
 #include "zip.h"
-#include "pch.h"
 
 // The latest modifications were made by Pavel Akimov.
 // Added port into UNIX-based systems. Windows version didn`t change.

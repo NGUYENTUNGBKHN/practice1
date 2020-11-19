@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_WORKSHEET_H
-//#define XLSX_WORKSHEET_H
+#ifndef XLSX_WORKSHEET_H
+#define XLSX_WORKSHEET_H
 
 #include <list>
 #include <map>
@@ -274,4 +274,4 @@ inline CWorksheet & CWorksheet::AddCells( const std::vector<CellDataTime> & data
 }
 } // namespace SimpleXlsx
 
-//#endif	// XLSX_WORKSHEET_H
+#endif	// XLSX_WORKSHEET_H

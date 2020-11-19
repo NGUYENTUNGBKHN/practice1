@@ -1,5 +1,5 @@
-//#ifndef _zip_H
-//#define _zip_H
+#ifndef _zip_H
+#define _zip_H
 
 // ZIP functions -- for creating zip files
 // This file is a repackaged form of the Info-Zip source code available
@@ -203,4 +203,4 @@ bool IsZipHandleZ(HZIP hz);
 
 
 
-//#endif
+#endif

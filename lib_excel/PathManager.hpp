@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_PATHMANAGER_HPP
-//#define XLSX_PATHMANAGER_HPP
+#ifndef XLSX_PATHMANAGER_HPP
+#define XLSX_PATHMANAGER_HPP
 
 #include <string>
 #include <vector>
@@ -89,4 +89,4 @@ class PathManager
 };
 
 }
-//#endif // XLSX_PATHMANAGER_HPP
+#endif // XLSX_PATHMANAGER_HPP

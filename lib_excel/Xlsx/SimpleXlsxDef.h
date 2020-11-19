@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_SIMPLE_XLSX_DEF_H
-//#define XLSX_SIMPLE_XLSX_DEF_H
+#ifndef XLSX_SIMPLE_XLSX_DEF_H
+#define XLSX_SIMPLE_XLSX_DEF_H
 
 #include <stdint.h>
 #include <cassert>
@@ -850,4 +850,4 @@ class CSheet
 
 }	// namespace SimpleXlsx
 
-//#endif // XLSX_SIMPLE_XLSX_DEF_H
+#endif // XLSX_SIMPLE_XLSX_DEF_H

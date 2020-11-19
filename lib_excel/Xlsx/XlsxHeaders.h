@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XLSX_HEADERS_H
-//#define XLSX_HEADERS_H
+#ifndef XLSX_HEADERS_H
+#define XLSX_HEADERS_H
 
 namespace SimpleXlsx
 {
@@ -86,4 +86,4 @@ namespace SimpleXlsx
     extern const char * ns_xdr;
 }
 
-//#endif	// XLSX_HEADERS_H
+#endif	// XLSX_HEADERS_H

@@ -19,8 +19,8 @@
   3. This notice may not be removed or altered from any source distribution.
 */
 
-//#ifndef XMLWRITER_H
-//#define XMLWRITER_H
+#ifndef XMLWRITER_H
+#define XMLWRITER_H
 
 #include <cassert>
 #include <limits>
@@ -309,4 +309,4 @@ class XMLWriter
 };
 }
 
-//#endif // XMLWRITER_H
+#endif // XMLWRITER_H
