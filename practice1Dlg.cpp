@@ -8,6 +8,7 @@
 #include "practice1Dlg.h"
 #include "afxdialogex.h"
 #include "communicate_file.h"
+#include "Cexcel.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -49,6 +50,7 @@ BEGIN_MESSAGE_MAP(Cpractice1Dlg, CDialogEx)
 //	ON_EN_CHANGE(IDC_EDIT1, &Cpractice1Dlg::OnEnChangeEdit1)
 //	ON_EN_CHANGE(IDC_EDIT2, &Cpractice1Dlg::OnEnChangeEdit2)
 ON_BN_CLICKED(IDOK, &Cpractice1Dlg::OnBnClickedOk)
+//ON_BN_CLICKED(IDC_BTN_TEST, &Cpractice1Dlg::OnBnClickedBtnTest)
 END_MESSAGE_MAP()
 
 CString typeStruct[] = { L"ASCII",L"HEX",L"DEC",L"OCT",L"BIN" };
@@ -178,11 +180,11 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 	// TODO: ここにコントロール通知ハンドラー コードを追加します。
 	this->UpdateData();
 
-
+	CString test;
 	// check link File CSV is empty ?
 	if (output_csv == "")
 	{
-		int res = MessageBoxW((LPCWSTR)L"Do you want to save file into default folder?", 
+		int res = MessageBoxW((LPCWSTR)L"Do you want to save CSV file into default folder?", 
 					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK | MB_YESNO);
 		if (res == IDYES)
 		{
@@ -190,10 +192,23 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 		}
 		else
 		{
-			MessageBoxW((LPCWSTR)L"Please select folder save file csv",
-						(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
-			return;
+			int res_2 = MessageBoxW((LPCWSTR)L"Do you want to save EXCEL file into default folder?",
+				(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK | MB_YESNO);
+			if (res_2 == IDYES)
+			{
+				output_csv = "./jcm_test.xlsx";
+			}
+			else
+			{
+				MessageBoxW((LPCWSTR)L"Please select folder save file csv",
+					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+				return;
+			}
 		}
+	}
+	else
+	{
+
 	}
 
 	// check data and edit box show data
@@ -205,49 +220,74 @@ void Cpractice1Dlg::OnBnClickedButtonSave()
 		return;
 	}
 
-	ComFile f;
-	
-	if (f.open(output_csv) != COM_OK)// open file csv - suceess
+	test = Split_string(output_csv, '.');
+	if (test == "xlsx")							// create file xlsx
 	{
-		
-		int selected_user = MessageBoxW((LPCWSTR)L"FILE NOT EXIST \n Do you want to create new file", 
-										(LPCWSTR)L"CREATE FILE", 
-										MB_YESNO | MB_ICONQUESTION);
-		if (selected_user == IDYES)
+		CEXCEL c;
+		std::string dir = CStringA(output_csv).GetBuffer();;
+		if (c.write_file(dir, __data) == CEXCEL_OK)
 		{
-			f.create_file_csv(output_csv);  // create file if user want create new file 
+			MessageBoxW((LPCWSTR)L"DONE EXCEL",
+				(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
 		}
 		else
 		{
-			return;  // quit
+			MessageBoxW((LPCWSTR)L"FAIL. Save again",
+				(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
 		}
-		f.open(output_csv);
 	}
-	else      // open fail
+	else if (test == "csv")												/// craet file CSV
 	{
-		int selected_user_2 = MessageBoxW((LPCWSTR)L"FILE EXISTED \n Do you want to override this file?",
-											(LPCWSTR)L"CREATE FILE",
-			MB_YESNO | MB_ICONQUESTION);
-		if (selected_user_2 == IDYES)
+		ComFile f;
+
+		if (f.open(output_csv) != COM_OK)// open file csv - suceess
 		{
-			// if yes override into existed file 
-		}
-		else
-		{
-			f.close();
-			output_csv.Delete(output_csv.GetLength() - 4, 4);
-			output_csv += "1.csv";
-			f.create_file_csv(output_csv);
+
+			int selected_user = MessageBoxW((LPCWSTR)L"FILE NOT EXIST \n Do you want to create new file",
+				(LPCWSTR)L"CREATE FILE",
+				MB_YESNO | MB_ICONQUESTION);
+			if (selected_user == IDYES)
+			{
+				f.create_file_csv(output_csv);  // create file if user want create new file 
+			}
+			else
+			{
+				return;  // quit
+			}
 			f.open(output_csv);
 		}
-	}
+		else      // open fail
+		{
+			int selected_user_2 = MessageBoxW((LPCWSTR)L"FILE EXISTED \n Do you want to override this file?",
+				(LPCWSTR)L"CREATE FILE",
+				MB_YESNO | MB_ICONQUESTION);
+			if (selected_user_2 == IDYES)
+			{
+				// if yes override into existed file 
+			}
+			else
+			{
+				f.close();
+				output_csv.Delete(output_csv.GetLength() - 4, 4);
+				output_csv += "1.csv";
+				f.create_file_csv(output_csv);
+				f.open(output_csv);
+			}
+		}
 
-	if (f.write_csv(__data) == COM_OK)       // write into file csv
-	{
-		MessageBoxW((LPCWSTR)L"DONE", 
-					(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+		if (f.write_csv(__data) == COM_OK)       // write into file csv
+		{
+			MessageBoxW((LPCWSTR)L"DONE CSV",
+				(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+		}
+		f.close();
 	}
-	f.close();
+	else
+	{
+		MessageBoxW((LPCWSTR)L"File invalid",
+			(LPCWSTR)L"ERROR", MB_ICONERROR);
+		return;
+	}
 	this->UpdateData(FALSE);
 }
 
@@ -406,3 +446,38 @@ void Cpractice1Dlg::OnBnClickedOk()
 	CDialogEx::OnOK();
 }
 
+
+
+//void Cpractice1Dlg::OnBnClickedBtnTest()
+//{
+//	// TODO: ここにコントロール通知ハンドラー コードを追加します。
+//	this->UpdateData();
+//	CEXCEL c;
+//	CString test;
+//	test = Split_string(output_csv,'.');
+//
+//	if (c.main() == CEXCEL_OK)
+//	{
+//		MessageBoxW((LPCWSTR)L"DONE",
+//			(LPCWSTR)L"SAVE FILE", MB_ICONASTERISK);
+//	}
+//	this->UpdateData(FALSE);
+//}
+
+
+CString Cpractice1Dlg::Split_string(CString str, const char c)
+{
+	CString sToken = _T("");
+	CString file_name;
+	int i = 0; // substring index to extract
+	while (AfxExtractSubString(sToken, str, i, c))
+	{
+		if (sToken != "")
+		{
+			file_name = sToken;
+		}
+
+		i++;
+	}
+	return file_name;
+}

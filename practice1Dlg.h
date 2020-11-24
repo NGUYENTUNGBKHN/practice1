@@ -48,4 +48,6 @@ public:
 	void update_data_show(CString cb, bool status_btn_show);
 	CButton c_btn_save;
 	afx_msg void OnBnClickedOk();
+//	afx_msg void OnBnClickedBtnTest();
+	CString Split_string(CString str, const char c);
 };
