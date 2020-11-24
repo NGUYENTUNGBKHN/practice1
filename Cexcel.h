@@ -21,6 +21,7 @@ public:
 	~CEXCEL();
 	int main();
 	int write_file(std::string dir, std::string data_excel);
+	std::wstring convert_str_to_wstring(std::string str);
 private:
 
 protected:

@@ -36,7 +36,7 @@ ComFile::~ComFile()
 
 int ComFile::open(CString dir_file)
 {
-	fs.open(dir_file);
+	fs.open(dir_file, std::ofstream::out | std::ofstream::trunc);
 	if (!fs.is_open())
 	{
 		return COM_FAIL;

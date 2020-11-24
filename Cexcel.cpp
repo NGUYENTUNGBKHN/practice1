@@ -1,4 +1,6 @@
 ﻿#include "Cexcel.h"
+#include <AtlBase.h>
+#include <atlconv.h>
 using namespace SimpleXlsx;
 
 typedef struct item_excel_s
@@ -25,8 +27,8 @@ item_exce_t item_excel[] = { {"File name",		"ASCII",16},
                         {"Boot version",	"ASCII",16},
                         {"Set timer",		"INT64",8},
                         {"Eapsed time",	"INT64",8},
-                        {"DipSW Setting",		"HEX",2},
-                        {"Option Setting",	"HEX",4} };
+                        {"DipSW設定",		"HEX",2},
+                        {"オプション設定",	"HEX",4} };
 
 CEXCEL::CEXCEL()
 {
@@ -36,6 +38,13 @@ CEXCEL::CEXCEL()
 CEXCEL::~CEXCEL()
 {
 
+}
+
+std::wstring CEXCEL::convert_str_to_wstring(std::string str)
+{
+    CA2W ca2w(str.c_str());
+    std::wstring w = ca2w;
+    return w;
 }
 
 int CEXCEL::write_file(std::string dir,std::string data_excel)
@@ -102,7 +111,7 @@ int CEXCEL::write_file(std::string dir,std::string data_excel)
             item_data += str_tg;
         }
         size_last += item_excel[j].size;
-        Sheet.BeginRow().AddCell(item_name).AddCell(item_data).EndRow();
+        Sheet.BeginRow().AddCell(convert_str_to_wstring(item_name)).AddCell(item_data).EndRow();
     }
 
 
@@ -116,6 +125,7 @@ int CEXCEL::write_file(std::string dir,std::string data_excel)
     }
     return CEXCEL_OK;
 }
+
 
 int CEXCEL::main()
 {
